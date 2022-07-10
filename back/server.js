@@ -3,9 +3,10 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import colors from 'colors'
 
+/** Middlewares */
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 /** Config */
 import { connectDB } from './config/db.js'
-
 /** Routes */
 import userRoutes from './routes/userRoutes.js'
 
@@ -20,6 +21,9 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json())
 app.use('/api/users', userRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
